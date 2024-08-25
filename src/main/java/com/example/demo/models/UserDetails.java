@@ -2,12 +2,8 @@ package com.example.demo.models;
 
 import java.util.List;
 
-import com.example.demo.models.Payment.PaymentDetails;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import com.example.demo.models.payment.PaymentDetails;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,14 +13,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDetails {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @OneToOne
     private User user;
-    @OneToMany
+
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Address> address;
 
- @OneToMany
+ @OneToMany(cascade = CascadeType.ALL)
     private List<PaymentDetails> paymentDetails;
     
 }

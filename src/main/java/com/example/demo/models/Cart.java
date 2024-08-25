@@ -6,11 +6,7 @@ import javax.annotation.processing.Generated;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,15 +22,12 @@ public class Cart {
     private Long id;
 
     @OneToOne
+    @JsonIgnore
     private User user;
 
-    @OneToMany(mappedBy = "cart")
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CartItem> cartItems;
 
-
-    @OneToMany(mappedBy = "cart")
-    @JsonIgnore
-    private List<Order> orders;
 
     private Double total;
 

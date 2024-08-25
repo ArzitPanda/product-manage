@@ -1,54 +1,44 @@
 package com.example.demo.models;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-import org.hibernate.validator.constraints.UUID;
+import com.example.demo.models.payment.PaymentDetails;
+import jakarta.persistence.*;
 
-import com.example.demo.models.Payment.PaymentDetails;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@Table(name = "orders")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Order {  
  @Id
- @GeneratedValue(strategy = GenerationType.UUID)         
-    private UUID Id;
+ @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "order")
+    private List<OrderItem> orderItemList;
 
 
-@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)    
-private Cart cart;
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_order_user_id")
+    private User userOrder;
 
+    @Embedded
+    private OrderAddress orderAddress;
+    @OneToOne
+    @JoinColumn(name="payment_details_id")
+    private PaymentDetails paymentDetails;
 
-@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)    
-private User userOrder;
+    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime updatedAt= LocalDateTime.now();
 
-@Embedded
-private Address userDetails;
-
-@Embedded
-private PaymentDetails paymentDetails;
-
-
-private LocalDateTime createdAt = LocalDateTime.now();
-private LocalDateTime updatedAt= LocalDateTime.now();
-
-@Enumerated(EnumType.STRING)
-private OrderStatus status;
+   @Enumerated(EnumType.STRING)
+   private OrderStatus status;
 
 
 

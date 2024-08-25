@@ -1,11 +1,7 @@
 package com.example.demo.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,12 +17,17 @@ public class CartItem {
     private Long Id;
 
     @OneToOne(fetch =FetchType.EAGER)
+    @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToOne(targetEntity = Cart.class)
-    private Cart Cart;
+
 
     private int quantity;
 
-    
+
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    @JsonIgnore
+    private Cart cart;
+
 }

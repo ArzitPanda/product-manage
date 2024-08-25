@@ -1,28 +1,20 @@
 package com.example.demo.models;
 
+
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@NoArgsConstructor
-@AllArgsConstructor
+@Embeddable
 @Data
-public class Address {
-
-    @Id
-    @GeneratedValue
-    private Long id;
-
+@AllArgsConstructor
+@NoArgsConstructor
+public class OrderAddress {
     private String street;
     private String city;
     private String state;
     private String zipCode;
     private String country;
     private String phoneNumber;
-
 }

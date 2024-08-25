@@ -1,10 +1,6 @@
-package com.example.demo.models.Payment;
+package com.example.demo.models.payment;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "debit_card_payment_details")
+@DiscriminatorValue("DEBIT_CARD")
 public class DebitCardPaymentDetails extends PaymentDetails {
 
 

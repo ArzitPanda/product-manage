@@ -1,11 +1,10 @@
 package com.example.demo.models;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,13 +23,18 @@ public class Product {
     private String description;
     private Double price;
 
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<Review> reviewList;
+
+
     @ManyToOne
+    @JsonIgnore
     private User creator;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    private byte[] image;
+    private String image;
 
     private Long stock;
 
